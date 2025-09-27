@@ -8,7 +8,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { useFormData, ConversationalForm, generateSlug } from '@/hooks/useFormData';
-import { useAuthData } from '@/hooks/useAuth';
 import { ChatWidget } from '@/components/chat/chat-widget';
 import { ArrowLeft, Save, Eye, Upload, Link as LinkIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -17,16 +16,8 @@ export default function FormEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { getForm, createForm, updateForm, loading } = useFormData();
-  const { user } = useAuthData();
   const { toast } = useToast();
   const [showPreview, setShowPreview] = useState(false);
-
-  // Auth guard
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    }
-  }, [user, navigate]);
 
   const [formData, setFormData] = useState({
     title: '',

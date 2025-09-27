@@ -1,32 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { useFormData, ConversationalForm, Lead, formatDate } from '@/hooks/useFormData';
-import { useAuthData } from '@/hooks/useAuth';
 import { ArrowLeft, Download, Users, Eye, TrendingUp } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export default function LeadManagement() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { getForm, getLeads, exportLeadsCSV } = useFormData();
-  const { user } = useAuthData();
   const { toast } = useToast();
   const [form, setForm] = useState<ConversationalForm | null>(null);
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // Auth guard
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-      return;
-    }
-  }, [user, navigate]);
 
   useEffect(() => {
     if (id) {

@@ -8,8 +8,6 @@ import Dashboard from "./pages/Dashboard";
 import FormEditor from "./pages/FormEditor";
 import FormPreview from "./pages/FormPreview";
 import LeadManagement from "./pages/LeadManagement";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,8 +20,6 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/forms/new" element={<FormEditor />} />
           <Route path="/forms/:id/edit" element={<FormEditor />} />
