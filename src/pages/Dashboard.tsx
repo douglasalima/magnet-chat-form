@@ -1,20 +1,37 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useFormData, ConversationalForm } from '@/hooks/useFormData';
-import { Plus, Eye, Users, Edit, Trash2, ExternalLink, Copy } from 'lucide-react';
+import { useAuthData } from '@/hooks/useAuth';
+import { Plus, Eye, Users, Edit, Trash2, ExternalLink, Copy, LogOut, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export default function Dashboard() {
   const { forms, getForms, deleteForm, loading } = useFormData();
+  const { user, logout } = useAuthData();
   const [formsList, setFormsList] = useState<ConversationalForm[]>([]);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // Redirect to login if not authenticated
+    if (!user) {
+      navigate('/login');
+      return;
+    }
     loadForms();
-  }, []);
+  }, [user, navigate]);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+    toast({
+      title: 'Logout realizado',
+      description: 'Você foi desconectado com sucesso',
+    });
+  };
 
   const loadForms = async () => {
     const data = await getForms();
@@ -46,17 +63,35 @@ export default function Dashboard() {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Meus Formulários</h1>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center">
+                <User className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold">Olá, {user?.name}!</h1>
+                <p className="text-sm text-muted-foreground">{user?.email}</p>
+              </div>
+            </div>
             <p className="text-muted-foreground">
               Crie formulários conversacionais para capturar leads de forma eficiente
             </p>
           </div>
-          <Link to="/forms/new">
-            <Button className="bg-gradient-primary hover:opacity-90 shadow-medium">
-              <Plus className="w-4 h-4 mr-2" />
-              Criar Formulário
+          <div className="flex gap-3">
+            <Button 
+              variant="outline" 
+              onClick={handleLogout}
+              className="border-border hover:bg-accent"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Sair
             </Button>
-          </Link>
+            <Link to="/forms/new">
+              <Button className="bg-gradient-primary hover:opacity-90 shadow-medium">
+                <Plus className="w-4 h-4 mr-2" />
+                Criar Formulário
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {/* Stats Cards */}

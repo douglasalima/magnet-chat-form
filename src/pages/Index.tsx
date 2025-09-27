@@ -24,14 +24,14 @@ const Index = () => {
               Simples de criar, poderoso para converter.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/dashboard">
+              <Link to="/signup">
                 <button className="px-8 py-4 bg-gradient-primary text-white rounded-xl font-semibold shadow-medium hover:shadow-large transition-all duration-300 hover:scale-105">
                   Começar Gratuitamente
                 </button>
               </Link>
-              <Link to="/f/marketing-digital-essencial">
+              <Link to="/login">
                 <button className="px-8 py-4 border border-border rounded-xl font-semibold hover:bg-accent transition-colors">
-                  Ver Exemplo
+                  Fazer Login
                 </button>
               </Link>
             </div>
@@ -88,7 +88,7 @@ const Index = () => {
           <p className="text-white/90 mb-8 max-w-2xl mx-auto">
             Crie seu primeiro formulário conversacional agora e veja a diferença na captura de leads
           </p>
-          <Link to="/dashboard">
+          <Link to="/signup">
             <button className="px-8 py-4 bg-white text-primary rounded-xl font-semibold shadow-medium hover:shadow-large transition-all duration-300 hover:scale-105">
               Criar Meu Primeiro Formulário
             </button>
